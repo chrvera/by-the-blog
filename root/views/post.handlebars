@@ -1,0 +1,33 @@
+<div class="post">
+    <h1>{{title}}</h1>
+    <p>{{content}}</p>
+    <p>by {{User.username}} on {{createdAt}}</p>
+</div>
+
+<section>
+    <h2>Comments</h2>
+    {{#if comments.length}}
+        {{#each comments}}
+            <div class="comment">
+                <p>{{content}}</p>
+                <p>by {{User.username}} on {{createdAt}}</p>
+            </div>
+        {{/each}}
+    {{else}}
+        <p>No comments yet.</p>
+    {{/if}}
+</section>
+
+{{#if logged_in}}
+    <section>
+        <h2>Leave a Comment</h2>
+        <form class="comment-form">
+            <textarea name="comment-body" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+{{else}}
+    <p>You must be <a href="/login">logged in</a> to comment.</p>
+{{/if}}
+
+<script src="/js/comment.js"></script>
