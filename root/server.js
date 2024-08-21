@@ -3,7 +3,7 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
-const { sequelize } = require('./config/connection');
+const sequelize = require('./config/connection');
 const helpers = require('./utils/helpers');
 const routes = require('./controllers');
 
@@ -13,13 +13,8 @@ const PORT = process.env.PORT || 3001;
 
 // Configure session store
 const sess = {
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // Set to true if using HTTPS
-    sameSite: 'Strict',
-  },
+  secret: "Super big secret",
+  cookie: {},
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
@@ -44,6 +39,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(routes);
 
 // Sync the database and start the server
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
 });
